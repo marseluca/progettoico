@@ -28,3 +28,5 @@
 Per familiarizzare col codice si può innanzitutto esaminare il contenuto della variabile "trajectories".<br>
 Successivamente si può provare a cambiare leggermente il set di punti dei path per vedere come cambiano le traiettorie che vengono generate.<br>
 Successivamente si possono iniziare a settare una alla volta le variabili "animation", "plotVelocities" e "plotCollisions" su true per vedere cosa succede.<br>
+
+[Presentazione Progetto ICO.pptx](https://github.com/user-attachments/files/18867524/Presentazione.Progetto.ICO.pptx)
