@@ -30,3 +30,17 @@ Successivamente si può provare a cambiare leggermente il set di punti dei path 
 Successivamente si possono iniziare a settare una alla volta le variabili "animation", "plotVelocities" e "plotCollisions" su true per vedere cosa succede.<br>
 
 [Presentazione Progetto ICO.pptx](https://github.com/user-attachments/files/18867524/Presentazione.Progetto.ICO.pptx)
+
+## Per il futuro
+L'obiettivo sarà quello di creare un algoritmo di ottimizzazione che generi delle traiettorie per le quali non ci siano collisioni.
+Il problema di ottimizzazione può essere impostato così:<br>
+
+![image](https://github.com/user-attachments/assets/d3734f2c-a98f-459c-940a-28da24ab6755)
+
+<br>
+Il modo in cui si costruisce l'algoritmo dipende dal solver di matlab che viene usato. Ma nel mio caso col Genetic Algorithm l'avevo impostato così (in modo semplificato):<br>
+![image](https://github.com/user-attachments/assets/2970322d-7c93-4e73-8d8d-af560ca084c0)<br>
+![image](https://github.com/user-attachments/assets/9e84bc20-f89b-47bf-804e-dbb2fee3304b)
+
+
+
