@@ -1,8 +1,10 @@
 %% TRAJECTORY COMPUTATION
 
 close all
+clear all
 global nRobots samplingTime pathColors maxVelocity maxAcceleration;
-global paths delta_s; 
+global paths delta_s;
+global x_opt;
 
 % Aggiungo la cartella Functions per utilizzare le funzioni al suo interno
 addpath("Functions"); 
@@ -27,10 +29,10 @@ maxVelocity = 10;
 maxAcceleration = 20;
 
 %% OPZIONI
-animation = false;
+animation = true;
 animVelocity = 7;
 recordAnimation = true;
-solveCollisions = false;
+solveCollisions = true;
 preloadOptimization = false;
 plotVelocities = false;
 plotCollisions = false;
@@ -43,7 +45,7 @@ pathColors = distinguishable_colors(nRobots);
 %% INTERPOLAZIONE
 trajectories = {};
 for j=1:nRobots
-    trajectories{j} = pp_interpolatePath2(paths{j},0,0);
+    trajectories{j} = pp_interpolatePath2(paths{j},maxVelocity,0,0);
 end
 
 % Plotta i path interpolati sulla mappa
@@ -51,18 +53,30 @@ figure(1)
 hold on
 pp_plotPathOnMap(paths,trajectories,'-');
 
-%% COLLISION CHECKING
-collisions = {};
-for j=1:nRobots
-    collisions{j} = pp_checkCollisionForOneRobot(paths,trajectories,collisionThreshold,j);
+
+if solveCollisions
+    ottimizzazione;
 end
 
-% Plotta le collisioni
-figure(1)
-hold on
-if plotCollisions
-    pp_plotCollisions(collisions,trajectories);
+%% INTERPOLAZIONE
+trajectories = {};
+for j=1:nRobots
+    trajectories{j} = pp_interpolatePath2(paths{j},x_opt(j),0,0);
 end
+
+
+% %% COLLISION CHECKING
+% collisions = {};
+% for j=1:nRobots
+%     collisions{j} = pp_checkCollisionForOneRobot(paths,trajectories,collisionThreshold,j);
+% end
+
+% Plotta le collisioni
+% figure(1)
+% hold on
+% if plotCollisions
+%     pp_plotCollisions(collisions,trajectories);
+% end
 
 % Crea i plot di posizione, velocità e accelerazione di ogni robot
 % Crea anche il plot delle distanze minime tra i robot per ogni step
@@ -77,7 +91,3 @@ if animation
     fprintf("\nPress enter (or any key) to record animation with velocity %dx...\n",animVelocity);
     pp_animateTrajectory(trajectories,robotSize,recordAnimation,animVelocity);
 end
-
-
-
-
