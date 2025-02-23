@@ -22,7 +22,7 @@ paths{4} = [-120, -50; -80, -5; -75, 0; -15, 0; -15, 45; 10, 45; 42, 30; 75, 45;
 nRobots = size(paths,2);
 
 %% VARIABILI
-robotSize = 6;
+robotSize = 3;
 delta_s = 7;
 collisionThreshold = delta_s;
 maxVelocity = 10;
@@ -84,6 +84,13 @@ end
 if plotVelocities
     pp_producePlots(trajectories,delta_s,plotVelocities);
 end
+
+figure
+minDistances = pp_getMinimumDistances(trajectories);
+plot(minDistances);
+hold on
+plot(1:length(minDistances),ones(1,length(minDistances))*delta_s)
+grid;
 
 
 %% ANIMAZIONE
