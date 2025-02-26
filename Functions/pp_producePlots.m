@@ -32,7 +32,7 @@ function plots = pp_producePlots(trajectories,delta_s,flag)
 
         for j=1:nRobots
 
-            figure(3+j)
+            figure
 
             hold on
             subplot(2,2,1)
@@ -71,30 +71,6 @@ function plots = pp_producePlots(trajectories,delta_s,flag)
             % ylim([0 1])
             grid on
             hold off
-
-            % subplot(3, 2, 5)
-            % % Plot individual components of velocity instead of magnitude
-            % hold on
-            % plot(trajectories{j}.t_tot, trajectories{j}.xdot_tot, 'LineWidth', 1.2, 'Color', 'r', 'DisplayName', 'a_x');
-            % plot(trajectories{j}.t_tot, trajectories{j}.ydot_tot, 'LineWidth', 1.2, 'Color', 'b', 'DisplayName', 'a_y');
-            % grid
-            % ylim([-1.5 1.5]);
-            % xlabel("t [s]")
-            % ylabel("$v(t)\:[m/s]$",'Interpreter','latex')
-            % % legend('v_x', 'v_y')
-            % hold off
-            % 
-            % subplot(3, 2, 6)
-            % % Plot individual components of acceleration instead of magnitude
-            % hold on
-            % plot(trajectories{j}.t_tot, trajectories{j}.xddot_tot, 'LineWidth', 1.2, 'Color', 'r', 'DisplayName', 'a_x');
-            % plot(trajectories{j}.t_tot, trajectories{j}.yddot_tot, 'LineWidth', 1.2, 'Color', 'b', 'DisplayName', 'a_y');
-            % grid
-            % ylim([-1 1]);
-            % xlabel("t [s]")
-            % ylabel("$a(t)\:[m/s^2]$",'Interpreter','latex')
-            % % legend('a_x', 'a_y')
-            % hold off
 
             sgtitle("Robot "+j)
             
