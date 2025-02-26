@@ -58,6 +58,14 @@ if solveCollisions
     ottimizzazione;
 end
 
+total_travel_time = 0;
+for i = 1:nRobots
+    slowedTraj = pp_interpolatePath2(paths{i}, x_opt(i), 0, 0);  
+    travel_time = slowedTraj.t_tot(end);
+    total_travel_time = max(total_travel_time, travel_time);
+end
+fprintf("Finish time: %d",total_travel_time);
+
 %% INTERPOLAZIONE
 trajectories = {};
 for j=1:nRobots
@@ -65,18 +73,18 @@ for j=1:nRobots
 end
 
 
-% %% COLLISION CHECKING
-% collisions = {};
-% for j=1:nRobots
-%     collisions{j} = pp_checkCollisionForOneRobot(paths,trajectories,collisionThreshold,j);
-% end
+%% COLLISION CHECKING
+collisions = {};
+for j=1:nRobots
+    collisions{j} = pp_checkCollisionForOneRobot(paths,trajectories,collisionThreshold,j);
+end
 
 % Plotta le collisioni
-% figure(1)
-% hold on
-% if plotCollisions
-%     pp_plotCollisions(collisions,trajectories);
-% end
+figure(1)
+hold on
+if plotCollisions
+    pp_plotCollisions(collisions,trajectories);
+end
 
 % Crea i plot di posizione, velocità e accelerazione di ogni robot
 % Crea anche il plot delle distanze minime tra i robot per ogni step

@@ -1,8 +1,7 @@
-function trajectory = pp_interpolatePath2(path,segmentToIncrease,scalingFactor)
+function trajectory = pp_interpolatePath2(path,vmax,segmentToIncrease,scalingFactor)
     
     global maxVelocity maxAcceleration;
     
-    vmax = maxVelocity;
     amax = maxAcceleration;
     numberOfSamples = 100;
     interpolatedPoints = {};
