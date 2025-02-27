@@ -1,6 +1,6 @@
 function trajectory = pp_interpolatePath2(path,vmax,segmentToIncrease,scalingFactor)
     
-    global maxVelocity maxAcceleration;
+    global maxAcceleration;
     
     amax = maxAcceleration;
     numberOfSamples = 100;
@@ -55,8 +55,8 @@ function trajectory = pp_interpolatePath2(path,vmax,segmentToIncrease,scalingFac
     trajectory.t_tot = linspace(t(1), t(end), numberOfSamples);
 
     % Evaluate the splines
-    trajectory.x_tot = ppval(spline_x,trajectory.t_tot);
-    trajectory.y_tot = ppval(spline_y,trajectory.t_tot);   
+    trajectory.x_tot = ppuval(trajectory.t_tot,spline_x);
+    trajectory.y_tot = ppuval(trajectory.t_tot,spline_y);   
 
 
     % === Compute the velocity ===
@@ -65,8 +65,8 @@ function trajectory = pp_interpolatePath2(path,vmax,segmentToIncrease,scalingFac
     velocity_y_spline = pp_derivateSplineVel(spline_y);
     
     % Evaluate the velocity components at the time points
-    trajectory.xdot_tot = ppval(velocity_x_spline,trajectory.t_tot);
-    trajectory.ydot_tot = ppval(velocity_y_spline,trajectory.t_tot);
+    trajectory.xdot_tot = ppuval(trajectory.t_tot,velocity_x_spline);
+    trajectory.ydot_tot = ppuval(trajectory.t_tot,velocity_y_spline);
 
     %% Remove the first and the last segment
     x_val = trajectory.x_tot;
@@ -91,8 +91,8 @@ function trajectory = pp_interpolatePath2(path,vmax,segmentToIncrease,scalingFac
     acceleration_y_spline = pp_derivateSplineAcc(velocity_y_spline); % Second derivative of position (y)
     
     % Evaluate the acceleration components at the time points
-    trajectory.xddot_tot = ppval(acceleration_x_spline,trajectory.t_tot);
-    trajectory.yddot_tot = ppval(acceleration_y_spline,trajectory.t_tot);
+    trajectory.xddot_tot = ppuval(trajectory.t_tot,acceleration_x_spline);
+    trajectory.yddot_tot = ppuval(trajectory.t_tot,acceleration_y_spline);
 
 
     % Compute the acc magnitude at each time step
@@ -136,8 +136,8 @@ function trajectory = pp_interpolatePath2(path,vmax,segmentToIncrease,scalingFac
         trajectory.t_tot = linspace(t(1), t(end), numberOfSamples);
 
         % Evaluate the splines
-        trajectory.x_tot = ppval(spline_x,trajectory.t_tot);
-        trajectory.y_tot = ppval(spline_y,trajectory.t_tot); 
+        trajectory.x_tot = ppuval(trajectory.t_tot,spline_x);
+        trajectory.y_tot = ppuval(trajectory.t_tot,spline_y); 
 
         % === Compute the velocity ===
         % Differentiate the pchip splines to get velocity
@@ -146,8 +146,8 @@ function trajectory = pp_interpolatePath2(path,vmax,segmentToIncrease,scalingFac
        
 
         % Evaluate the velocity components at the time points
-        trajectory.xdot_tot = ppval(velocity_x_spline,trajectory.t_tot);
-        trajectory.ydot_tot = ppval(velocity_y_spline,trajectory.t_tot);
+        trajectory.xdot_tot = ppuval(trajectory.t_tot,velocity_x_spline);
+        trajectory.ydot_tot = ppuval(trajectory.t_tot,velocity_y_spline);
 
 
         % === Compute the acceleration ===
@@ -156,8 +156,8 @@ function trajectory = pp_interpolatePath2(path,vmax,segmentToIncrease,scalingFac
         acceleration_y_spline = pp_derivateSplineAcc(velocity_y_spline); % Second derivative of position (y)
         
         % Evaluate the acceleration components at the time points
-        trajectory.xddot_tot = ppval(acceleration_x_spline,trajectory.t_tot);
-        trajectory.yddot_tot = ppval(acceleration_y_spline,trajectory.t_tot);
+        trajectory.xddot_tot = ppuval(trajectory.t_tot,acceleration_x_spline);
+        trajectory.yddot_tot = ppuval(trajectory.t_tot,acceleration_y_spline);
     end
    
     

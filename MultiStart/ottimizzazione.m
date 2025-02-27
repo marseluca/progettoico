@@ -1,7 +1,7 @@
 clc;
 
-addpath("Functions"); 
-addpath("Optim Functions"); 
+addpath("C:\Users\Luca\Desktop\progettoico\Functions"); 
+addpath("C:\Users\Luca\Desktop\progettoico\Optim Functions"); 
 
 % Numero di robot
 global nRobots delta_s paths maxVelocity maxAcceleration;
@@ -19,23 +19,23 @@ options = optimoptions('fmincon', 'Algorithm', 'interior-point', ...
                       'ConstraintTolerance', 1e-10, ...
                       'StepTolerance', 1e-12, ...
                       'OptimalityTolerance', 1e-10, ...
-                      'Display', 'final');
+                      'Display', 'none');
 
 lb = v_min * ones(nRobots,1);
 ub = v_max * ones(nRobots,1);
 
 % Creazione del problema di ottimizzazione
 problem = createOptimProblem('fmincon', 'objective', @(x) o_objective(x, paths), ...
-                             'x0', x0, 'lb', lb, ...
-                             'ub', ub, ...
+                             'x0', x0, 'lb', lb, 'ub', ub, ...
                              'nonlcon', @(x) o_collision_constraint(x, paths, delta_s), ...
                              'options', options);
 
-problem.x0 = lhsdesign(500, length(x0)) .* (ub - lb) + lb;
 
+ms = MultiStart('UseParallel', true, 'Display', 'none', 'StartPointsToRun', 'bounds-ineqs');
+[x_opt, fval] = run(ms, problem, 500);
 
-ms = MultiStart('UseParallel', true, 'Display', 'final', 'StartPointsToRun', 'bounds-ineqs');
-[x_opt, fval] = run(ms, problem, 500); % Prova con 500 punti iniziali
+% gs = GlobalSearch('Display', 'final', 'StartPointsToRun', 'bounds-ineqs');
+% [x_opt, fval] = run(gs, problem);
 
 
 % Visualizzazione del risultato
