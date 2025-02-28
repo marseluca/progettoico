@@ -1,4 +1,4 @@
-function [state, options, optchanged] = o_outputFcn3(options, state, flag)
+function [state, options, optchanged] = o_outputFcn2(options, state, flag)
     optchanged = false;  % Default is no change to options
     global maxGen;
     global paths delta_s;
